@@ -17,6 +17,25 @@ const Profile = {
         index(req, res) {
             return res.render(views + "profile", { profile: Profile.data });
         },
+
+        update(req, res) {
+            //req.body para pegar os dados do profile
+            const data = req.body;
+            const weeksPerYear = 52;
+            const weeksPerMonth = (weeksPerYear - data.vacationPerYear) / 12;
+            const weekTotalHours = data.hoursPerDay * data.daysPerWeek;
+            const monthlyTotalHours = weekTotalHours * weeksPerMonth;
+
+            const hours = (data.monthlyBudget / monthlyTotalHours);
+
+            Profile.data = {
+                ...Profile.data,
+                ...req.body,
+                valueHour: hours,
+            };
+
+            return res.redirect('/profile')
+        },
     },
 };
 
@@ -38,7 +57,10 @@ const Job = {
                 };
             });
 
-            return res.render(views + "index", { profile: Profile.data, jobs: updatedJobs });
+            return res.render(views + "index", {
+                profile: Profile.data,
+                jobs: updatedJobs,
+            });
         },
 
         create(req, res) {
@@ -81,6 +103,7 @@ routes.get("/", Job.controllers.index);
 routes.get("/job", Job.controllers.create);
 routes.get("/job/edit", (req, res) => res.render(views + "job-edit"));
 routes.get("/profile", Profile.controllers.index);
+routes.post("/profile", Profile.controllers.update);
 routes.post("/job", Job.controllers.save);
 
 module.exports = routes;
