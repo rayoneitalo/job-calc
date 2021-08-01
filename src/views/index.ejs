@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <script src="scripts/index.js" defer type="module"></script>
+    <script src="/scripts/index.js" defer type="module"></script>
   </head>
   <body id="page-index">
     <header class="page-header">
@@ -93,7 +93,11 @@
             </div>
             <div class="actions column flex">
               <p class="sr-only">Ações</p>
-              <a href="/job/edit" class="button white edit" title="Editar Job">
+              <a
+                href="/job/<%= job.id %> "
+                class="button white edit"
+                title="Editar Job"
+              >
                 <img src="/images/edit-24.svg" alt="Editar Job" />
               </a>
               <button class="delete button white" title="Excluir Job">
@@ -105,29 +109,6 @@
           <% }) %>
 
           <!-- end card -->
-
-          <!-- <div class="card done" data-id="2">
-            <div class="id column">2</div>
-            <div class="name column">OneTwo Project</div>
-            <div class="deadline column">
-              <span>Prazo</span>
-              <p>3 dias para a entrega</p>
-            </div>
-            <div class="amount column">
-              <span>Valor</span>
-              <p>R$ 4500,00</p>
-            </div>
-            <div class="status badge column">Encerrado</div>
-            <div class="actions column flex">
-              <p class="sr-only">Ações</p>
-              <a href="/job/edit" class="button white edit" title="Editar Job">
-                <img src="/images/edit-24.svg" alt="Editar Job" />
-              </a>
-              <button class="delete button white" title="Excluir Job">
-                <img src="/images/trash-24.svg" alt="Excluir Job" />
-              </button>
-            </div>
-          </div> -->
         </div>
         <!-- end cards -->
       </main>
@@ -143,7 +124,6 @@
           Ele será apagado para sempre.
         </p>
 
-        <p></p>
         <footer>
           <a class="button gray" href="#">Cancelar</a>
           <button class="button red" type="submit" form="delete-job">
@@ -151,7 +131,7 @@
           </button>
         </footer>
       </div>
-      <form method="post" action="/job/delete" id="delete-job"></form>
+      <form method="POST" action="/job/delete" id="delete-job"></form>
     </div>
     <!-- end modal-wrapper -->
   </body>
