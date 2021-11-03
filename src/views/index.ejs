@@ -28,17 +28,22 @@
       <div class="container">
         <section id="top" class="animate-up">
           <h2 class="sr-only">Homepage</h2>
+
           <img id="logo" src="/images/logo.svg" alt="Logo" />
+
           <span id="notification">
             <img src="/images/alert-octagon.svg" alt="Alerta" />
-            Você tem 2 horas livres no seu dia
+
+            <%= freeHours <=0 ? 'Você não tem horas livres' : freeHours == 1 ?
+            'Você tem ' + freeHours + ' hora livre no seu dia' : 'Você tem ' +
+            freeHours + ' horas livres no seu dia' %>
           </span>
+
           <a href="/profile" id="avatar-profile">
             <p><%= profile.name %> <span>Ver perfil</span></p>
             <img src="<%= profile.avatar %> " />
           </a>
         </section>
-
         <div class="separator"></div>
 
         <section id="summary" class="animate-up delay-1">
@@ -46,15 +51,15 @@
 
           <div class="info">
             <div class="total">
-              <strong><%= jobs.length %> </strong>
-              <%= jobs.length === 1 ? 'Projeto' : 'Projetos' %> ao total
+              <strong><%= statusCount.total %> </strong>
+              <%= statusCount.total === 1 ? 'Projeto' : 'Projetos' %> ao total
             </div>
             <div class="in-progress">
-              <strong>7</strong>
+              <strong><%= statusCount.progress %> </strong>
               Em andamento
             </div>
             <div class="finished">
-              <strong>4</strong>
+              <strong><%= statusCount.done %> </strong>
               Encerrados
             </div>
           </div>
