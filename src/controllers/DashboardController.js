@@ -3,16 +3,19 @@ const JobUtils = require("../utils/JobUtils");
 const Job = require("../model/Job");
 
 module.exports = {
-  index(req, res) {
+  async index(req, res) {
+    const profile = await Profile.get();
+    const jobs = await Job.get();
+
     let statusCount = {
       progress: 0,
       done: 0,
-      total: Job.get().length,
+      total: jobs.length,
     };
 
     let jobTotalHours = 0;
 
-    const updatedJobs = Job.get().map((job) => {
+    const updatedJobs = jobs.map((job) => {
       const remaining = JobUtils.remainingDays(job);
       const status = remaining <= 0 ? "done" : "progress";
 
@@ -27,14 +30,14 @@ module.exports = {
         ...job,
         remaining,
         status,
-        budget: JobUtils.calculateBudget(job, Profile.get().valueHour),
+        budget: JobUtils.calculateBudget(job, profile.valueHour),
       };
     });
 
-    const freeHours = Profile.get().hoursPerDay - jobTotalHours;
+    const freeHours = profile.hoursPerDay - jobTotalHours;
 
     return res.render("index", {
-      profile: Profile.get(),
+      profile: profile,
       jobs: updatedJobs,
       statusCount: statusCount,
       freeHours: freeHours,
