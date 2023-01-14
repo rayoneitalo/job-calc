@@ -42,8 +42,8 @@ const initDb = {
     )
     
     VALUES (
-        "Italo Raoyone",
-        "https://avatars.githubusercontent.com/ItaloRayonne",
+        "",
+        "https://avatars.githubusercontent.com/<usernme>",
         0,
         0,
         0,
